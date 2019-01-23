@@ -27,5 +27,9 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ## git Commands 
-git commit -am "first commit"
-git push -u origin master
+git commit -am "first commit"  <br />
+git push -u origin master      <br />
+<ul>
+<li>Line 1</li>
+<li>Line 2</li>
+</ul>

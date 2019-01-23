@@ -6,7 +6,9 @@ import { AppComponent } from './app.component';
 
 import { MaterialModule } from './core/material.module'
 import { FirebaseModule } from './core/firebase.module';
-import { UserProfileComponent } from './user-profile/user-profile.component'
+import { ReactiveFormsModule } from '@angular/forms';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { UserProfileComponent } from './user-profile/user-profile.component'
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
-    FirebaseModule
+    FirebaseModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

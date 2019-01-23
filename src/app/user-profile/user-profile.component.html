@@ -11,9 +11,6 @@
 <button mat-raised-button color="primary" (click)="auth.googleLogin()">
     <i class="fa fa-google"></i> Connect Google </button>
 
-<button mat-raised-button color="primary" (click)="auth.emailLogin()">
-    <i class="fa fa-google"></i> Connect email</button>
-
 </ng-template>
 
 
@@ -27,3 +24,105 @@
   <button mat-raised-button color="primary" (click)="auth.signOut()">Logout</button>
 </div>
 </ng-template>
+
+<ng-container *ngIf="(auth.user | async) || {} as user">
+
+    <form [formGroup]="signupForm" *ngIf="!user.uid" (ngSubmit)="signup()">
+        
+      <h3>New User Signup</h3>
+    
+      <mat-form-field>
+          <input matInput type="email" formControlName="email" placeholder="Email">
+      </mat-form-field>
+
+      <div *ngIf="email.invalid && email.dirty">
+          Your email doesn't look quite right...
+      </div>
+
+      <mat-form-field>
+          <input matInput type="password" formControlName="password" placeholder="Password">
+      </mat-form-field>
+    
+      <div *ngIf="password.invalid && password.touched" >
+        Password must be between 6 and 24 chars and have at least one number 
+      </div>
+    
+      <div *ngIf="signupForm.valid" >Form looks good! Let's do this.</div>
+    
+      <button mat-raised-button color="primary" type="submit" [disabled]="!signupForm.valid">Submit</button>
+
+    </form>
+    
+    <form [formGroup]="signinForm" *ngIf="!user.uid" (ngSubmit)="signin()">
+        
+        <h3>User Signin</h3>
+
+      <mat-form-field>
+          <input matInput type="email" formControlName="email" placeholder="Email">
+      </mat-form-field>
+
+      <mat-form-field>
+          <input matInput type="password" formControlName="password" placeholder="Password">
+      </mat-form-field>
+      
+        <button mat-raised-button color="primary"  type="submit" [disabled]="!signinForm.valid">Submit</button>
+  
+      </form>
+        
+        
+    <form [formGroup]="detailForm" *ngIf="user.uid && !user.catchPhrase" (ngSubmit)="setCatchPhrase(user)">
+      
+      <h3>Set your Catch Phrase</h3>
+  
+      <label for="catchPhrase">CatchPhrase</label>
+      <input type="test" formControlName="catchPhrase">
+    
+      <button mat-raised-button color="primary" type="submit" [disabled]="!detailForm.valid">Submit</button>
+    </form>
+  
+    <p *ngIf="user.catchPhrase">
+        You have completed the form!
+    </p>
+      
+  </ng-container>
+
+     <ng-container *ngIf="(auth.user | async) || {} as user">
+      <form [formGroup]="phoneSigninForm" *ngIf="!user.uid" (ngSubmit)="sendLoginCode()">
+        
+          <h3>Sign In with Your Phone Number</h3>
+  
+        <mat-form-field>
+            <input matInput type="text" formControlName="country" placeholder="1">
+        </mat-form-field>
+  
+        <mat-form-field>
+            <input matInput type="text" formControlName="area" placeholder="949">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="text" formControlName="prefix" placeholder="555">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="text" formControlName="line" placeholder="5555">
+        </mat-form-field>
+        
+          <button mat-raised-button color="primary"  type="submit" [disabled]="!phoneSigninForm.valid">SMS Text Login Code</button>
+    
+        </form>
+
+        <form [formGroup]="verificationCodeForm" *ngIf="!user.uid && windowRef.confirmationResult" (ngSubmit)="verifyLoginCode()">
+      
+            <mat-form-field>
+                <input matInput type="text" formControlName="verificationCode" placeholder="Enter your Verification Code Here">
+            </mat-form-field>
+            
+            <button mat-raised-button color="primary" type="submit" [disabled]="!verificationCodeForm.valid">Verify</button>
+          </form>
+
+
+      </ng-container>
+
+      <hr>
+      <div id="recaptcha-container"></div>
+      <hr>
